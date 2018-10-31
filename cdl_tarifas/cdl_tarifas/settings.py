@@ -9,10 +9,13 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+
+
 BOT_NAME = 'cdl_tarifas'
 
 SPIDER_MODULES = ['cdl_tarifas.spiders']
 NEWSPIDER_MODULE = 'cdl_tarifas.spiders'
+FEED_EXPORT_ENCODING = 'utf-8'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

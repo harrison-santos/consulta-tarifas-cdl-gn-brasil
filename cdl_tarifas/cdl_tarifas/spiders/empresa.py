@@ -23,7 +23,7 @@ class Empresa(object):
             cont = cont + 2
         return faixa_tarifa
 
-    def organiza_faixa_tarifas_parcelas(self, vetor_faixa, vetor_tarifa, vetor_parcelas):
+    def organiza_faixa_tarifas_parcelas(self, vetor_faixa, vetor_tarifa, vetor_parcelas):#dados(n_faixa, vetor_fxas, tar_simp, tar_cimp, par_simp, par_cimp)
         cont = 0
         dados = []
         for i in range(0, len(vetor_faixa), 1):

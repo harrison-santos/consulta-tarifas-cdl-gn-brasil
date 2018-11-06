@@ -3,10 +3,6 @@ class Empresa(object):
     def __init__(self, nome):
         self.nome = nome
 
-    def getCaminhoDados(self, dir_tablerow, inicio_tablerow, inicio_tabledata, sinal_tablerow, sinal_tabledata):#(DIRETÓRIO SCRAPY, INT FIM DA ROW, INICIO TD)
-        caminho = (dir_tablerow + "[position() " +sinal_tablerow+" {}]/td[position() "+sinal_tabledata+" {}]").format(inicio_tablerow, inicio_tabledata)
-        return caminho
-
     def organiza_faixa(self, vetor_faixa):
         for i in range(0, int(len(vetor_faixa) / 2), 1):
             vetor_faixa[i] = vetor_faixa[i] + " a " + vetor_faixa.pop(i + 1)

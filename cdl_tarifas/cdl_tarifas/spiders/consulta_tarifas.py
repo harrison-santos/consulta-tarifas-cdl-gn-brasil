@@ -94,10 +94,13 @@ class ConsultaTarifasSpider(scrapy.Spider):
         faixa_auxiliar = "0 a 999.999.999"
 
         #INDUSTRIAL
-        vetor_faixa = response.xpath(sergas.getCaminhoDados("//div[contains(@id, 'tab1')]/table/tbody/tr", 1, 1, ">=", ">=")+"/span/text()").extract()
-        vetor_faixa.remove('2,3638')
-        vetor_tarifas = response.xpath(sergas.getCaminhoDados("//div[contains(@id, 'tab1')]/table/tbody/tr", 1, 1, ">=", ">=")+"/text()").extract()
-        vetor_tarifas.insert(vetor_tarifas.index('1,7197')+1, '2,3638')#O VALOR '2,1199' ESTÁ DENTRO DE UMA TAG 'SPAN' E NÃO FOI PEGO
+        vetor_faixa = response.xpath("//div[contains(@id, 'tab1')]/table/tbody/tr/td[1]/span/text()").extract()
+        #Existe um valor de tarifa que está dentro de um tag span, diferente de todos os outros que estão somente dentro de uma tag td,
+        valor_span = response.xpath('//div[contains(@id, "tab1")]/table/tbody/tr[8]/td[3]/span/text()').extract()[0]
+        anterior_td = response.xpath('//div[contains(@id, "tab1")]/table/tbody/tr[8]/td[2]/text()').extract()[0]
+        vetor_tarifas = response.xpath("//div[contains(@id, 'tab1')]/table/tbody/tr/td[position() >= 2]/text()").extract()
+        vetor_tarifas.insert(vetor_tarifas.index(anterior_td)+1, valor_span)#Tarifa 'valor_span' não foi capturado no response acima mas agora foi adicionado com relacao ao seu anterior.
+        ##
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from self.envia_dados(dados, sergas.nome, "INDUSTRIAL", "NAO POSSUI", "NAO POSSUI")
         #INDUSTRIAL
@@ -137,7 +140,6 @@ class ConsultaTarifasSpider(scrapy.Spider):
         vetor_tarifas = response.xpath('//*[@id="tab6"]/table/tbody/tr/td[position() < 3]/text()').extract()
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from self.envia_dados(dados, sergas.nome, "COMPRIMIDO", "NAO POSSUI", "POSSUI")
-        faixa_auxiliar = [faixa_auxiliar[0]]
         #COMPRIMIDO
 
     def envia_bahiagas(self, response):

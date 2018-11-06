@@ -1,5 +1,5 @@
 
-FEED_EXPORT_ENCODING = 'utf-8'
+
 
 import scrapy
 import sys
@@ -13,9 +13,9 @@ from empresa import Empresa
 
 class ConsultaTarifasSpider(scrapy.Spider):
     name = 'consulta_tarifas'
-    allowed_domains = ['www.sergipegas.com.br', 'bahiagas.com.br', 'gasmig.com.br', 'compagas.com.br', 'sulgas.rs.gov.br', 'comgas.com.br', 'potigas.com.br',
+    allowed_domains = ['sergipegas.com.br', 'bahiagas.com.br', 'gasmig.com.br', 'compagas.com.br', 'sulgas.rs.gov.br', 'comgas.com.br', 'potigas.com.br',
                        'msgas.com.br', 'copergas.com.br', 'algas.com.br', 'pbgas.com.br', 'scgas.com.br', 'cegas.com.br']
-    start_urls = ['http://www.cegas.com.br']
+    start_urls = ['http://www.bahiagas.com.br']
 
 
     def parse(self, response):
@@ -95,9 +95,9 @@ class ConsultaTarifasSpider(scrapy.Spider):
 
         #INDUSTRIAL
         vetor_faixa = response.xpath(sergas.getCaminhoDados("//div[contains(@id, 'tab1')]/table/tbody/tr", 1, 1, ">=", ">=")+"/span/text()").extract()
-        vetor_faixa.remove('2,1199')
+        vetor_faixa.remove('2,3638')
         vetor_tarifas = response.xpath(sergas.getCaminhoDados("//div[contains(@id, 'tab1')]/table/tbody/tr", 1, 1, ">=", ">=")+"/text()").extract()
-        vetor_tarifas.insert(vetor_tarifas.index('1,5422')+1, '2,1199')#O VALOR '2,1199' ESTÁ DENTRO DE UMA TAG 'SPAN' E NÃO FOI PEGO
+        vetor_tarifas.insert(vetor_tarifas.index('1,7197')+1, '2,3638')#O VALOR '2,1199' ESTÁ DENTRO DE UMA TAG 'SPAN' E NÃO FOI PEGO
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from self.envia_dados(dados, sergas.nome, "INDUSTRIAL", "NAO POSSUI", "NAO POSSUI")
         #INDUSTRIAL
@@ -200,7 +200,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
         yield from self.envia_dados(dados, bahiagas.nome, "RESIDENCIAL", "NAO POSSUI", "POSSUI")
         #RESIDENCIAL
 
-    #VERIFICAR VEICULAR
+    #VERIFICAR TARIFAS DO VEICULAR. NAO POSSUI SEM IMPOSTO.
     def envia_gasmig(self, response, segmento_):
         gasmig = Empresa('GASMIG')
         faixa_auxiliar = "0 a 999.999.999"
@@ -644,7 +644,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
             dados = comgas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
             yield from self.envia_dados(dados, comgas.nome, segmento_, "NAO POSSUI", "POSSUI")
 
-    #INCOMPLETO
+    #INCOMPLETO - NAO CAPTURADO
     def envia_cegas(self):
         cegas = Empresa('CEGAS')
         faixa_auxiliar = "0 a 999.999.999"
@@ -768,7 +768,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
         yield from self.envia_dados(dados, potigas.nome, "COMERCIAL", "TARIFA ESPECIAL", "NAO POSSUI")
         #RESIDENCIAL E COMERCIAL
 
-    #INCOMPLETO
+    #INCOMPLETO - NAO CAPTURADO
     def envia_msgas(self):###FALTA FAZER
         pass
 
@@ -1199,3 +1199,19 @@ class ConsultaTarifasSpider(scrapy.Spider):
 
 
 
+    """FEITO O CÁLCULO DE TARIFA SEM IMPOSTO: 
+    Residencial: SULGAS, Brasiliano, SCGAS. 
+    COMERCIAL: Brasiliano, SCGAS. 
+    VEICULAR: SCGAS. 
+    INDUSTRIAL: SCGAS.
+    
+    CÁLCULO TARIFA SEM IMPOSTO
+    VARIAVEIS = ICMS, PIS, CONFINS, TAR_CIMP
+    impostos = ICMS+PIS+CONFINS
+    tar_simp = tar_cimp - (tar_cimp*(impostos/100))
+    """
+
+    """FEITO CÁLCULO TARIFA COM IMPOSTO
+    INDUSTRIAL: SULGAS.
+    COMERCIAL: SULGAS.
+    VEICULAR: SULGAS."""

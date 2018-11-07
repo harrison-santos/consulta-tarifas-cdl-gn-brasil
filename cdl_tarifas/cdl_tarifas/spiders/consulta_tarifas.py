@@ -6,8 +6,7 @@ import sys
 import urllib
 import bs4
 from datetime import date
-#sys.path.insert(0, 'C:\Users\harrison.santos\PycharmProjects\PyCharm\PythonScrapy\cdl_tarifas\arquivos')
-sys.path.insert(1, 'C:/Users/harrison.santos/PycharmProjects/PyCharm/PythonScrapy/cdl_tarifas/cdl_tarifas/spiders')
+sys.path.insert(1, 'C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders')
 from empresa import Empresa
 
 
@@ -20,16 +19,20 @@ class ConsultaTarifasSpider(scrapy.Spider):
 
     def parse(self, response):
         #YIELDS
-        yield scrapy.Request(url="https://www.sergipegas.com.br/cms/tarifas/", callback=self.envia_sergas, priority=1)
-        yield scrapy.Request(url="http://clienteonline.bahiagas.com.br/portal/tabela_tarifaria.jsp", callback=self.envia_bahiagas)
-
-        yield scrapy.Request(url="https://www.potigas.com.br/sistema-tarifario", callback=self.envia_potigas)
-        yield scrapy.Request(url="http://www.pbgas.com.br/?page_id=1477", callback=self.envia_pbgas)
-        yield scrapy.Request(url="https://www.copergas.com.br/atendimento-ao-cliente/tarifas", callback=self.envia_copergas)
+        yield scrapy.Request(url="https://www.sergipegas.com.br/cms/tarifas/",
+                             callback=self.envia_sergas, priority=1)
+        yield scrapy.Request(url="http://clienteonline.bahiagas.com.br/portal/tabela_tarifaria.jsp",
+                             callback=self.envia_bahiagas)
+        yield scrapy.Request(url="https://www.potigas.com.br/sistema-tarifario",
+                             callback=self.envia_potigas)
+        yield scrapy.Request(url="http://www.pbgas.com.br/?page_id=1477",
+                             callback=self.envia_pbgas)
+        yield scrapy.Request(url="https://www.copergas.com.br/atendimento-ao-cliente/tarifas",
+                             callback=self.envia_copergas)
+        yield scrapy.Request(url="http://cegas.com.br/tabela-de-tarifas-atual/",
+                             callback=self.envia_cegas)
         yield from self.envia_compagas()#BEAUTIFUL  SOUP
         #NAOOK yield from self.envia_msgas()#BEAUTIFUL  SOUP
-        #NAOOK yield scrapy.Request(url="http://www.cegas.com.br/index.php?option=com_content&view=article&id=322&Itemid=163", callback=self.envia_cegas())
-        #NAOOK yield from self.envia_cegas()
         #YIELDS
 
         #COMGAS
@@ -110,7 +113,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
         vetor_faixa = response.xpath('//*[@id="tab2"]/table/tbody/tr/td[1]/text()').extract()
         vetor_tarifas = response.xpath('//*[@id="tab2"]/table/tbody/tr/td[position() > 1]/text()').extract()
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
-        yield from self.envia_dados(dados, sergas.nome,"COGERACAO", "NAO POSSUI", "NAO POSSUI")
+        yield from self.envia_dados(dados, sergas.nome, "COGERACAO", "NAO POSSUI", "NAO POSSUI")
         #SERGAS COG
 
         #SERGAS VEICULAR
@@ -647,89 +650,69 @@ class ConsultaTarifasSpider(scrapy.Spider):
             yield from self.envia_dados(dados, comgas.nome, segmento_, "NAO POSSUI", "POSSUI")
 
     #INCOMPLETO - NAO CAPTURADO
-    def envia_cegas(self):
+    def envia_cegas(self, response):
         cegas = Empresa('CEGAS')
-        faixa_auxiliar = "0 a 999.999.999"
-        vetor_faixa = []
-        link = "http://www.cegas.com.br/index.php?option=com_content&view=article&id=322&Itemid=163"
-        #necessario segmentos em ordem.
-        segmentos = [('INDUSTRIAL', 'NAO POSSUI'), ('COGERACAO', 'NAO POSSUI'), ('VEICULAR', 'NAO POSSUI'), ('VEICULAR', 'COMPRIMIDO'),
-                     ('INDUSTRIAL', 'COMPRIMIDO'), ('COMERCIAL', 'NAO POSSUI'), ('RESIDENCIAIS', 'NAO POSSUI')]
+        faixa_auxiliar = ["0 a 999.999.999"]
+
+        #INDUSTRIAL
+        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[1]/tbody/tr[position() >= 2]/td[2]/text()').extract()
+        tam = len(vetor_faixa)
+        vetor_faixa[tam-1] = cegas.remove_string_acima(vetor_faixa[tam-1])
+        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[1]/tbody/tr[position() >= 2]/td[position() > 2]/text()').extract()
+        dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
+        yield from self.envia_dados(dados, cegas.nome, 'INDUSTRIAL', 'NAO POSSUI', 'NAO POSSUI')
+        #INDUSTRIAL
+
+        #COGERAÇÃO
+        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[2]/tbody/tr[position() >= 2]/td[2]/text()').extract()
+        tam = len(vetor_faixa)
+        vetor_faixa[tam - 1] = cegas.remove_string_acima(vetor_faixa[tam - 1])
+        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[2]/tbody/tr[position() >= 2]/td[position() > 2]/text()').extract()
+        dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
+        yield from self.envia_dados(dados, cegas.nome, 'COGERACAO', 'NAO POSSUI', 'NAO POSSUI')
+        #COGERAÇÃO
+
+        #VEICULAR
+        vetor_faixa = faixa_auxiliar
+        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[3]/tbody/tr[position() = 2]/td[position() > 2]/text()').extract()
+        dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
+        yield from self.envia_dados(dados, cegas.nome, 'VEICULAR', 'NAO POSSUI', 'NAO POSSUI')
+        #VEICULAR
+
+        #COMPRIMIDO FINS INDUSTRIAIS
+        vetor_faixa = faixa_auxiliar
+        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[5]/tbody/tr[position() = 2]/td[position() > 2]/text()').extract()
+        dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
+        yield from self.envia_dados(dados, cegas.nome, 'COMPRIMIDO', 'NAO POSSUI', 'NAO POSSUI')
+        #COMPRIMIDO FINS INDUSTRIAIS
 
 
-        s = urllib.request.urlopen(link)
-        soup = s.read().decode('ISO-8859-1')
-        soup = bs4.BeautifulSoup(soup, 'html.parser')
-        tables = soup.findAll('table', attrs={'bgcolor': '#333399'})
-        tam = len(tables)
+        #COMERCIAL
+        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[1]/text()').extract()
+        tam = len(vetor_faixa)
+        vetor_faixa[tam - 1] = cegas.remove_string_acima(vetor_faixa[tam - 1])
 
-        if(tam == len(segmentos)):
-            tb_count = 1
-            tr_count = 1
-            td_count = 1
-            sp_count = 1
+        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[position() = 3 or position() = 5]/text()').extract()
+        vetor_tarifas[0] = vetor_tarifas[0].replace('–', '0')
+        vetor_tarifas[1] = vetor_tarifas[1].replace('–', '0')
+        vetor_parcelas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[position() = 2 or position() = 4]/text()').extract()
+        dados = cegas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
+        yield from self.envia_dados(dados, cegas.nome, 'COMERCIAL', 'NAO POSSUI', 'NAO POSSUI')
+        #COMERCIAL
 
-            for table in tables:
-                segmento = segmentos[tb_count-1][0]
-                subsegmento = segmentos[tb_count - 1][1]
+        #RESIDENCIAL
+        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/div/table/tbody/tr[position() >= 3]/td[1]/text()').extract()
+        tam = len(vetor_faixa)
+        vetor_faixa[tam - 1] = cegas.remove_string_acima(vetor_faixa[tam - 1])
 
-                if(tb_count <= 2):
-                    vetor_faixa = []
-                    vetor_tarifas = []
-                    for tr in table.findAll('tr'):
-                        if(tr_count > 1):
-                            #print("Linha: {}".format(tr_count))
-                            for span in tr.findAll('span'):
-                                #print("Span Numero {}".format(sp_count))
-                                #print(span.get_text().strip())
-                                if(sp_count == 2):
-                                    vetor_faixa.append(span.get_text().strip())
-                                    #print("Valor: {}  ".format(span.get_text().strip()))
-                                elif(sp_count == 3):
-                                    vetor_tarifas.append(span.get_text().strip())
-                                    #print("Valor: {}  X".format(span.get_text().strip()))
-                                elif (sp_count == 4):
-                                    vetor_tarifas.append(span.get_text().strip())
-                                    #print("Valor: {} S".format(span.get_text().strip()))
-                                sp_count = sp_count+1
-                            sp_count = 1
-                        tr_count= tr_count+1
+        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/div/table/tbody/tr[position() >= 3]/td[position() = 3 or position() = 5]/text()').extract()
+        vetor_tarifas[0] = vetor_tarifas[0].replace('–', '0')
+        vetor_tarifas[1] = vetor_tarifas[1].replace('–', '0')
+        vetor_parcelas = response.xpath('//article[contains(@id, "post-327")]/div[2]/div/table/tbody/tr[position() >= 3]/td[position() = 2 or position() = 4]/text()').extract()
+        dados = cegas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
+        yield from self.envia_dados(dados, cegas.nome, 'RESIDENCIAL', 'NAO POSSUI', 'NAO POSSUI')
+        #RESIDENCIAL
 
-                    print('{} e {}'.format(segmento, subsegmento))
-                    tam = len(vetor_faixa)
-                    if(tb_count == 1):
-                        vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('60.001 acima', '60.001 a 999.999.999')
-                    elif(tb_count == 2):
-                        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('670.001 acima', '670.001 a 999.999.999')
-
-
-                    dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
-                    yield from self.envia_dados(dados, cegas.nome, segmento, subsegmento, "NAO SEI")
-
-
-
-
-                    tr_count = 1
-                elif(tb_count >= 3 and tb_count <= 5):
-                    vetor_faixa.append(faixa_auxiliar)
-                    for tr in table.findAll('tr'):
-                       pass
-                elif(tb_count >= 6):
-                    pass
-
-                tb_count = tb_count+1
-
-        else:
-            print("Nao. Variavel Tam: {} e Segmentos: {}".format(tam, len(segmentos)))
-
-        print(dados)
-
-        #for table in tables:
-          #  aux = table.findAll('span')
-        #print(vetor_faixa)
-        #print(vetor_tarifas)
-        #dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
-        #print(dados)
 
     def envia_potigas(self, response):
         potigas = Empresa("POTIGAS")
@@ -1103,7 +1086,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
         fxa_uni = "NAO"
 
         #parcela_fxa = "NAO"
-        #reducao = "NAO" #É DEFINIDO COMO RED B CÁLCULO "POSSUI", AQUELAS QUE POSUEM VALOR ABAIXO DO CÁLUCO: ICMS+(7.60+1.65)
+
         for i in range(0, len(dados), 1):#percorrer dados pegando sempre o valor de faixa
             if str(dados[i][4]) != '0' or str(dados[i][5]) != '0':
                 parcela_fxa = "SIM"
@@ -1217,3 +1200,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
     INDUSTRIAL: SULGAS.
     COMERCIAL: SULGAS.
     VEICULAR: SULGAS."""
+
+
+    """"ANOTAÇÕES:
+        CEGAS -> Os campos de tarifas que estão sendo capturados são tarifa_simp e tar_venda_prazo.
+    """

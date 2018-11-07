@@ -107,3 +107,11 @@ class Empresa(object):
             aux2 = float(vetor_2[i].replace(',', '.'))
             vetor_soma.append(str(aux1+aux2).replace('.', ','))
         return vetor_soma
+
+    def remove_string_acima(self, faixa):#REMOVE A STRING 'ACIMA' DE UMA FAIXA DE VALORES SUBSTITUINDO A STRING PELO DOBRO DA PRIMEIRA FAIXA. Ex: '60.001 acima' vai ser igual a '60.001 a 120.002'
+        fxa_ini = ''
+        for char in faixa:
+            if char.isdigit():
+                fxa_ini += char
+
+        return faixa.replace('acima', 'a {}'.format(int(fxa_ini) * 2))

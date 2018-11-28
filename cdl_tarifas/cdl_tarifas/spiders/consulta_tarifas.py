@@ -52,7 +52,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
                         ('VEICULAR', 'http://www.gasmig.com.br/NossosServicos/Veicular/Paginas/Tarifas.aspx'),
                         ('INDUSTRIAL', 'http://www.gasmig.com.br/NossosServicos/Industrial/Paginas/Tarifas.aspx'),
                         ('COGERACAO', 'http://www.gasmig.com.br/NossosServicos/Cogeracao/Paginas/Tarifas.aspx'),
-                        ('COMPRIMIDO', 'http://www.gasmig.com.br/NossosServicos/COMPRIMIDOeGNL/Paginas/Tarifas.aspx')]
+                        ('COMPRIMIDO', 'http://www.gasmig.com.br/NossosServicos/GNCeGNL/Paginas/Tarifas.aspx')]
         for link in gasmig_links:
             callback = lambda response, l = link[0]: self.envia_gasmig(response,l)
             yield scrapy.Request(url=link[1], callback=callback)#FUNCIONANDO <- MELHORAR
@@ -109,20 +109,19 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #INDUSTRIAL
 
         #COGERACAO
-        #Os dados de faixa e tarifas estão no mesmo nível e na mesma sequência do tratamento "envia_dados()" não preciso da função 'organiza_faixa_tarifas()'
         vetor_faixa = response.xpath('//*[@id="tab2"]/table/tbody/tr/td[1]/text()').extract()
         vetor_tarifas = response.xpath('//*[@id="tab2"]/table/tbody/tr/td[position() > 1]/text()').extract()
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from self.envia_dados(dados, sergas.nome, "COGERACAO", "NAO POSSUI", "NAO POSSUI")
-        #SERGAS COG
+        #COGERACAO
 
-        #SERGAS VEICULAR
+        #VEICULAR
         vetor_faixa = [faixa_auxiliar]
         vetor_tarifas = response.xpath('//*[@id="tab3"]/table/tbody/tr/td[position() = 1]/text()').extract()
         vetor_tarifas.extend(response.xpath('//*[@id="tab3"]/table/tbody/tr/td[position() = 2]/p/text()').extract())
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from self.envia_dados(dados, sergas.nome, "VEICULAR", "NAO POSSUI", "NAO POSSUI")
-        #SERGAS VEICULAR
+        #VEICULAR
 
         #RESIDENCIAL
         vetor_faixa = [faixa_auxiliar]
@@ -214,8 +213,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             #MEDICAO INDIVIDUAL
             vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_9f154d0c_f442_4cbd_99ac_040c90b4abc5"]/div/table/tbody/tr/td[1]/text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '')
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace(vetor_faixa[tam - 1],'201,00  a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1]+ ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_9f154d0c_f442_4cbd_99ac_040c90b4abc5"]/div/table/tbody/tr/td[position() = 3 or position() = 5]/text()').extract()
             vetor_parcelas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_9f154d0c_f442_4cbd_99ac_040c90b4abc5"]/div/table/tbody/tr/td[position() = 2 or position() = 4]/text()').extract()
             dados = gasmig.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
@@ -225,8 +224,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             # MEDICAO COLETIVA
             vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_e8ccddb0_a1bc_4397_a93b_9da0cdb86a18"]/div/table/tbody/tr/td[position() = 1]/text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[1] = vetor_faixa[1].replace('150 a 1.500', '151 a 1.500')
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de 1.500', '1501 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam-1]+ ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_e8ccddb0_a1bc_4397_a93b_9da0cdb86a18"]/div/table/tbody/tr/td[position() = 3 or position() = 5] / text()').extract()
             #faixa_tarifas = gasmig.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             vetor_parcelas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_e8ccddb0_a1bc_4397_a93b_9da0cdb86a18"]/div/table/tbody/tr/td[position() = 2 orposition() = 4] / text()').extract()
@@ -239,11 +238,12 @@ class ConsultaTarifasSpider(scrapy.Spider):
             #PEQUENO CLIENTE NÃO RESIDENCIAL
             vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_86a48297_f0e3_436f_831d_52708cc6448c"]/div/table/tbody/tr/td[position() = 1]/text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 2.000', '2.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_86a48297_f0e3_436f_831d_52708cc6448c"]/div/table/tbody/tr/td[position() = 3 or position() = 5]/text()').extract()
             vetor_parcelas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_86a48297_f0e3_436f_831d_52708cc6448c"]/div/table/tbody/tr/td[position() = 2 orposition() = 4] / text()').extract()
             dados = gasmig.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
-            yield from self.envia_dados(dados, gasmig.nome, segmento_, "PEQUENO CLIENTE NAO RESIDENCIAL", "POSSUI")
+            yield from self.envia_dados(dados, gasmig.nome, segmento_, "PEQUENO CLIENTE", "POSSUI")
             #PEQUENO CLIENTE NÃO RESIDENCIAL
 
             #NAO POSSUI
@@ -252,7 +252,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             vetor_faixa = [primeira_faixa[0]]
             vetor_faixa.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_d2480188_710f_4ebe_b624_20664a29c517"]/div/table/tbody/tr[position() >= 2 and position() <= 7] / td[1] / text()').extract())
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 25.000', '25.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             #vetor tarifas excluindo a primeira faixa com suas tarifas
             vetor_tarifas = ['0', '0']
             vetor_tarifas.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_d2480188_710f_4ebe_b624_20664a29c517"]/div/table/tbody/tr[position() >= 2 and position() <= 7] / td[position() >= 2] / text()').extract())
@@ -273,7 +274,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             #INDUSTRIAL
             vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_bc88c2cf_fffb_47bc_bd06_01685cb485de"]/div/table/tbody/tr[position() >= 1 and position() <= 13]/td[1]/text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 4.000.000', '4.000.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_faixa[tam - 2] = vetor_faixa[tam - 2].replace('\t', '')
             vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_bc88c2cf_fffb_47bc_bd06_01685cb485de"]/div/table/tbody/tr[position() >= 1 and position() <= 13] / td[position() >= 2] / text()').extract()
             dados = gasmig.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -287,7 +289,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             vetor_faixa = [primeira_faixa[0]]
             vetor_faixa.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_3841b951_522d_4f47_b5cb_f98857249109"]/div/table/tbody/tr[position() >= 2 and position() <= 7]/td[1]/text()').extract())
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 25.000', '25.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_3841b951_522d_4f47_b5cb_f98857249109"]/div/table/tbody/tr[position() >= 2 and position() < 8]/td[position() >= 2] / text()').extract())
             dados = gasmig.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             #primeira faixa
@@ -298,7 +301,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         elif segmento_ == 'COGERACAO':
             vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_a4c4a739_e889_4340_95f0_5b372388fa14"]/div/table/tbody/tr[position() >= 1]/td[1]/text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 2.000.001', '2.000.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_a4c4a739_e889_4340_95f0_5b372388fa14"]/div/table/tbody/tr/td[position() = 3 or position() = 5]/text()').extract()
             vetor_parcelas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_a4c4a739_e889_4340_95f0_5b372388fa14"]/div/table/tbody/tr/td[position() = 2 or position() = 4]/text()').extract()
             dados = gasmig.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
@@ -419,12 +423,13 @@ class ConsultaTarifasSpider(scrapy.Spider):
                 vetor_faixa[i] = vetor_faixa[i].replace('\xa0', ' ')
 
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 500.000', '500.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('/html/body/div[3]/article/div[2]/table[5] / tbody / tr[position() > 1 and position() <= 5] / td[2] / p / text()').extract()
             vetor_tarifas.extend(response.xpath('/html/body/div[3]/article/div[2]/table[5] / tbody / tr[position() > 5] / td[2] / text()').extract())
             vetor_tarifas = sulgas.calcula_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
-            vetor_parcelas = response.xpath('/html/body/div[3]/article/div[2]/table[5] / tbody / tr[position() > 1 and position() <= 5] / td[3] / p / text()').extract()
-            vetor_parcelas.extend(response.xpath('/html/body/div[3]/article/div[2]/ table[5] / tbody / tr[position() > 5] / td[3] / text()').extract())
+            vetor_parcelas = response.xpath('/html/body/div[3]/article/div[2]/table[5] / tbody / tr[position() > 1 and position() <= 3] / td[3] / p / text()').extract()
+            vetor_parcelas.extend(response.xpath('/html/body/div[3]/article/div[2]/ table[5] / tbody / tr[position() >= 4] / td[3] / text()').extract())
             vetor_parcelas = sulgas.calcula_imposto_parcela(self.icms, self.pis, self.confins, vetor_parcelas)
             dados = sulgas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
             yield from self.envia_dados(dados, sulgas.nome, segmento_, "INTERRUPTIVEL", "POSSUI")
@@ -438,7 +443,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
                 vetor_faixa.pop()
 
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 800.000', '800.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('/html/body/div[3]/article/div[2]/table[7] / tbody / tr[position() > 1] / td[2] / p / text()').extract()
             vetor_tarifas = sulgas.calcula_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
             vetor_parcelas = response.xpath('/html/body/div[3]/article/div[2]/table[7] / tbody / tr[position() > 1] / td[3] / text()').extract()
@@ -452,7 +458,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             vetor_faixa.extend(response.xpath('/html/body/div[3]/article/div[2]/table[9] / tbody / tr[position() > 1] / td[1] / p / text()').extract())
             vetor_faixa[0] = vetor_faixa[0].replace('\xa0', ' ')
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 16.000', '16.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('/html/body/div[3]/article/div[2]/table[9] / tbody / tr[position() > 1] / td[3] / p / text()').extract()
             vetor_tarifas = sulgas.calcula_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
 
@@ -460,12 +467,9 @@ class ConsultaTarifasSpider(scrapy.Spider):
             vetor_parcelas = response.xpath('/html/body/div[3]/article/div[2]/table[9] / tbody / tr[position() > 1] / td[2] / p / text()').extract()
             vetor_parcelas[2] = vetor_parcelas[2].replace(',00', '')
             vetor_parcelas = sulgas.calcula_imposto_parcela(self.icms,self.pis,self.confins,vetor_parcelas)
-            index = vetor_parcelas.index('13,776')
-            vetor_parcelas[index] = vetor_parcelas[index].replace(',', '')
-            index = vetor_parcelas.index('17,493')
-            vetor_parcelas[index] = vetor_parcelas[index].replace(',', '')
-            #vetor_parcelas[index] = vetor_parcelas[index].replace('33', '3')
-            ####
+            tam = len(vetor_parcelas)
+            vetor_parcelas[tam-1] = vetor_parcelas[tam-1].replace(',', '')#C IMPOSTO
+            vetor_parcelas[tam - 2] = vetor_parcelas[tam - 2].replace(',', '')#S IMPOSTO
             vetor_mmbtu = response.xpath('/html/body/div[3]/article/div[2]/table[9] / tbody / tr[position() > 1] / td[4] / p / text()').extract()
             vetor_mmbtu.insert(1, response.xpath('/html/body/div[3]/article/div[2]/ table[9] / tbody / tr[3] / td[4] / text()').extract()[0])
             vetor_mmbtu = sulgas.calcula_imposto_parcela(self.icms, self.pis, self.confins, vetor_mmbtu)
@@ -489,12 +493,14 @@ class ConsultaTarifasSpider(scrapy.Spider):
             #COMERCIAL
             vetor_faixa = response.xpath('/html/body/div[3]/article/div[2]/table[1]/tbody / tr[position() > 1] / td[1] / p / text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 15.000', '15.001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('/html/body/div[3]/article/div[2]/table[1] / tbody / tr[position() > 1] / td[3] / p / text()').extract()
             vetor_tarifas = sulgas.calcula_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
             vetor_parcelas = response.xpath('/html/body/div[3]/article/div[2]/table[1] / tbody / tr[position() > 1] / td[2] / p / text()').extract()
             for i in range(0, len(vetor_parcelas)):
                 vetor_parcelas[i] = vetor_parcelas[i].replace('.', '')
+
             vetor_parcelas = sulgas.calcula_s_imposto_parcela(self.icms, self.pis, self.confins, vetor_parcelas)
 
             dados = sulgas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
@@ -507,7 +513,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
                 vetor_faixa[i] = vetor_faixa[i].replace('\xa0', ' ')
 
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de 3.840', '3.841 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('/html/body/div[3]/article/div[2]/table[1] / tbody / tr[position() > 1] / td[3] / p / text()').extract()
             vetor_tarifas.append(response.xpath('/html/body/div[3]/article/div[2]/table[1] / tbody / tr[8] / td[3] / text()').extract()[0])
             vetor_tarifas = sulgas.calcula_s_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
@@ -540,8 +547,9 @@ class ConsultaTarifasSpider(scrapy.Spider):
             for i in range(0, len(vetor_faixa)):
                 vetor_faixa[i] = vetor_faixa[i].replace('m³', '')
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 2] = vetor_faixa[tam - 2].replace('1.000,00 ', '1000,00')
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>1.000,00 ', '1000,01 a 999.999.999')
+            vetor_faixa[tam - 2] = vetor_faixa[tam - 2].replace('.', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '').replace('.', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1]+ ' a 999.999.999'
 
             vetor_tarifas = response.xpath('//table[1]//tbody/tr/td/table[1]/tbody/ tr[position() > 2] / td[position() = 4 or position() = 6] / text()').extract()
             vetor_tarifas[0] = vetor_tarifas[0].replace('–', '0')
@@ -557,8 +565,10 @@ class ConsultaTarifasSpider(scrapy.Spider):
             for i in range(0, len(vetor_faixa)):
                 vetor_faixa[i] = vetor_faixa[i].replace('m³', '')
 
-            vetor_faixa[0] = vetor_faixa[0].replace('até 500,00', '1 a 500,00')
-            vetor_faixa[2] = vetor_faixa[2].replace('> 2.000,00', '2.000,01 a 999.999.999')
+            vetor_faixa[0] = vetor_faixa[0].replace('até ', '').replace('Até ', '')
+            vetor_faixa[0] = '1 a '+vetor_faixa[0]
+            vetor_faixa[2] = vetor_faixa[2].replace('>', '')
+            vetor_faixa[2] = vetor_faixa[2]+' a 999.999.999'
             vetor_tarifas = response.xpath('//table/tbody/tr/td/table[2]/tbody/tr/td[position() = 4 or position() = 6] / text()').extract()
             vetor_parcelas = response.xpath('//table/tbody/tr/td/table[2]/tbody/tr/ td[position() = 3 or position() = 5] / text()').extract()
 
@@ -572,7 +582,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
                 vetor_faixa[i] = vetor_faixa[i].replace('m³', '')
             vetor_faixa[0] = vetor_faixa[0].replace('0 – 0', '0 a 0')
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 50.000,00', '50000,01 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '').replace('.', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1]+ ' a 999.999.999'
             vetor_tarifas = response.xpath('//table/tbody/tr/td//table/tbody/tr/td[position() = 4 or position() = 6] / text()').extract()
             vetor_tarifas[0] = vetor_tarifas[0].replace('–', '0')
             vetor_tarifas[1] = vetor_tarifas[1].replace('–', '0')
@@ -589,9 +600,12 @@ class ConsultaTarifasSpider(scrapy.Spider):
             for i in range(0, len(vetor_faixa)):
                 vetor_faixa[i] = vetor_faixa[i].replace('m³', '')
                 vetor_faixa[i] = vetor_faixa[i].replace('.', '')
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 50000,00', '1 a 50000,00')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a '+vetor_faixa[0]
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 2000000,00', '2000000,01 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '').replace('.', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
+
             vetor_tarifas = response.xpath('//table/tbody/tr/td//table/tbody/tr[position() > 2] / td[position() = 4 or position() = 6] / text()').extract()
             vetor_parcelas = response.xpath('//table/tbody/tr/td//table/tbody/tr[position() > 2] / td[position() = 3 or position() = 5] / text()').extract()
             for i in range(0, len(vetor_parcelas)):
@@ -618,10 +632,11 @@ class ConsultaTarifasSpider(scrapy.Spider):
             for i in range(0, len(vetor_faixa)):
                 vetor_faixa[i] = vetor_faixa[i].replace('m³', '')
                 vetor_faixa[i] = vetor_faixa[i].replace('.', '')
-            pass
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 5000,00', '1 a 5000,00')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a ' + vetor_faixa[0]
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 10000000,00', '10000000,00 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '').replace('.', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//table/tbody/tr/td//table/tbody/tr[position() > 2] / td[position() = 3 or position() = 5] / text()').extract()
             vetor_tarifas[9] = vetor_tarifas[9].replace('\xa0', '')
             dados = comgas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -641,9 +656,11 @@ class ConsultaTarifasSpider(scrapy.Spider):
                 vetor_faixa[i] = vetor_faixa[i].replace('m³', '')
                 vetor_faixa[i] = vetor_faixa[i].replace('.', '')
 
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 50000,00', '1 a 50000,00')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a ' + vetor_faixa[0]
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 2000000,00', '2000001,00 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '').replace('.', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//table/tbody/tr/td//table/tbody/tr[position() > 2] / td[position() = 4 or position() = 6] / text()').extract()
             vetor_parcelas = response.xpath('//table/tbody/tr/td//table/tbody/tr[position() > 2] / td[position() = 3 or position() = 5] / text()').extract()
             dados = comgas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
@@ -721,7 +738,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #INDUSTRIAL
         vetor_faixa = response.xpath('//*[@id="internas"]/table[1]/tbody/tr[position() > 1] / td[1] / text()').extract()
         tam = len(vetor_faixa)
-        vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('Acima de 400.000', '999.999.999')
+        vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('Acima de ', '')
+        vetor_faixa[tam-1] = vetor_faixa[tam-1]+' a 999.999.999'
         faixa_inicio = [1]
 
         for i in range(0, tam-1):
@@ -749,8 +767,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #RESIDENCIAL E COMERCIAL
         vetor_tarifas = response.xpath('//*[@id="internas"]/table[5]/tbody/tr[position() > 1] / td / text()').extract()
         dados = potigas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
-        yield from self.envia_dados(dados, potigas.nome, "RESIDENCIAL", "TARIFA ESPECIAL", "NAO POSSUI")
-        yield from self.envia_dados(dados, potigas.nome, "COMERCIAL", "TARIFA ESPECIAL", "NAO POSSUI")
+        yield from self.envia_dados(dados, potigas.nome, "RESIDENCIAL", "NAO POSSUI", "NAO POSSUI")
+        yield from self.envia_dados(dados, potigas.nome, "COMERCIAL", "NAO POSSUI", "NAO POSSUI")
         #RESIDENCIAL E COMERCIAL
 
     #INCOMPLETO - NAO CAPTURADO
@@ -767,7 +785,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
             vetor_faixa1[i] = str(int(vetor_faixa1[i].replace('.', '')) + 1)
         vetor_faixa2 = response.xpath('//*[@id="colLeft"]/table[2]/tr[position() >= 3] / td[position() = 3] / text()').extract()
         tam = len(vetor_faixa2)
-        vetor_faixa2[tam - 1] = vetor_faixa2[tam - 1].replace('-', '999999999')
+        vetor_faixa2[tam - 1] = vetor_faixa2[tam - 1].replace('-', '999.999.999')
         vetor_faixa = pbgas.agrupa_duas_faixa(vetor_faixa1, vetor_faixa2)
         tarifa_s_imposto = response.xpath('//*[@id="colLeft"]/table[2]/tr[position() >= 3] / td[position() = 5] / text()').extract()
         tarifa_c_imposto = response.xpath('//*[@id="colLeft"]/table[2]/tr[position() >= 3] / td[position() = 4] / text()').extract()
@@ -835,7 +853,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #INDUSTRIAL GRANDE PORTE
         vetor_faixa = response.xpath('//*[@id="content"]/article/table[1]/tbody/ tr[position() >= 3] / td[1] / text()').extract()
         tam = len(vetor_faixa)
-        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de 225.000', '225.001 a 999.999.999')
+        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de ', '').replace('Acima de ', '')
+        vetor_faixa[tam - 1] = vetor_faixa[tam - 1]+' a 999.999.999'
         vetor_tarifas = response.xpath('//*[@id="content"]/article/table[1]/tbody / tr[position() >= 3] / td[position() = 2 or position() = 4] / text()').extract()
         for i in range(0, len(vetor_tarifas)):
             vetor_tarifas[i] = vetor_tarifas[i].replace('.', ',')
@@ -848,7 +867,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #INDUSTRIAL PEQUENO PORTE
         vetor_faixa = response.xpath('//*[@id="content"]/article/table[5]/tbody / tr[position() >= 3] / td[1] / text()').extract()
         tam = len(vetor_faixa)
-        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de 9.000', '9.001 a 999.999.999')
+        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de ', '').replace('Acima de ', '')
+        vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
         vetor_tarifas = response.xpath('//*[@id="content"]/article/table[5]/tbody / tr[position() >= 3] / td[position() = 2 or position() = 4] / text()').extract()
         for i in range(0, len(vetor_tarifas)):
             vetor_tarifas[i] = vetor_tarifas[i].replace('.', ',')
@@ -861,7 +881,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #RESIDENCIAL
         vetor_faixa = response.xpath('//*[@id="content"]/article/table[7]/tbody / tr[position() >= 3] / td[1] / text()').extract()
         tam = len(vetor_faixa)
-        vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('3.000', '3.001')
+        #vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('3.000', '3.001')
         vetor_tarifas = response.xpath('//*[@id="content"]/article/table[7]/tbody / tr[position() >= 3] / td[position() = 2 or position() = 4] / text()').extract()
         for i in range(0, len(vetor_tarifas)):
             vetor_tarifas[i] = vetor_tarifas[i].replace('.', ',')
@@ -882,7 +902,9 @@ class ConsultaTarifasSpider(scrapy.Spider):
         #COGERACAO
         vetor_faixa = response.xpath('//*[@id="content"]/article/table[17]/tbody / tr[position() >= 3] / td[1] / text()').extract()
         tam = len(vetor_faixa)
-        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de 50.000', '50.001 a 999.999.999')
+        vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('acima de ', '').replace('Acima de ', '')
+        vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
+
         vetor_tarifas = response.xpath('//*[@id="content"]/article/table[17]/tbody / tr[position() >= 3] / td[position() = 2 or position() = 4] / text()').extract()
         for i in range(0, len(vetor_tarifas)):
             vetor_tarifas[i] = vetor_tarifas[i].replace('.', ',')
@@ -906,8 +928,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         if segmento_ == "INDUSTRIAL":
             vetor_faixa = response.xpath('//*[@id="acontent"]/section[2]/div/div/div[2] / table / tbody / tr[position() >= 2] / td[1] / text()').extract()
             tam = len(vetor_faixa)
-            print("TAMAAAAAAAAANHO: {}".format(tam))
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+200000,0001', '200000 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_faixa = algas_organiza_faixa(vetor_faixa)
             vetor_tarifas = response.xpath('//*[@id="acontent"]/section[2]/div/div/ div[2] / table / tbody / tr[position() >= 2] / td[position() >= 2] / text()').extract()
             dados = algas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -917,7 +939,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             vetor_faixa = response.xpath('//*[@id="acontent"]/section[2]/div/div/div[2] / table / tbody / tr[position() >= 3] / td[1] / text()').extract()
             tam = len(vetor_faixa)
             print("TAMAAAAAAAAANHO: {}".format(tam))
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+3001', '3001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="acontent"]/section[2]/div/div/div[2] / table / tbody / tr[position() >= 3] / td[position() >= 2] / text()').extract()
             dados = algas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             yield from self.envia_dados(dados, algas.nome, "COMERCIAL", "NAO POSSUI", "POSSUI")
@@ -925,8 +948,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         elif segmento_ == 'RESIDENCIAL':
             vetor_faixa = response.xpath('//*[@id="acontent"]/section[2]/div/div/div[2] / table / tbody / tr[position() >= 3] / td[1] / text()').extract()
             tam = len(vetor_faixa)
-            print("TAMAAAAAAAAANHO: {}".format(tam))
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+301', '301 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="acontent"]/section[2]/div/div/div[2]/table/tbody/tr[position() >= 3]/td[position() >= 2]/text()').extract()
             dados = algas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             yield from self.envia_dados(dados, algas.nome, "RESIDENCIAL", "NAO POSSUI", "POSSUI")
@@ -934,7 +957,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         elif segmento_ == 'COGERACAO':
             vetor_faixa = response.xpath('//*[@id="content"]/div/table/tbody/tr[position() >= 3] / td[1] / text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+200001', '200001 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('+', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_tarifas = response.xpath('//*[@id="content"]/div/table/tbody/tr[position() >= 3] / td[position() >= 2] / text()').extract()
             dados = algas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             yield from self.envia_dados(dados, algas.nome, "COGERACAO", "NAO POSSUI", "POSSUI")
@@ -945,7 +969,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
             dados = algas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             yield from self.envia_dados(dados, algas.nome, "VEICULAR", "NAO POSSUI", "NAO POSSUI")
 
-    #INCOMPLETO
+    #INCOMPLETO. VERIFICAR TAMBÉM QUE É SÓ MOSTRADO A TARIFA COM IMPOSTO
     def envia_gasbrasiliano(self, response, segmento_):
         self.icms = 15
         self.pis = 1.65
@@ -965,7 +989,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             #MEDICAO INDIVIDUAL
             vetor_faixa = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table[1] / tbody / tr[position() >= 1] / td[2] / text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 80,00', '80,00 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1]+' a 999.999.999'
             vetor_faixa = organiza_faixa(vetor_faixa)
             vetor_tarifas = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table[1] / tbody / tr / td[4] / text()').extract()
             vetor_tarifas[0] = vetor_tarifas[0].replace('-', '0')
@@ -979,7 +1004,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             #MEDICAO COLETIVA
             vetor_faixa = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table[2] / tbody / tr[position() >= 1] / td[2] / text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 2.250,00', '2.250,00 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_faixa = organiza_faixa(vetor_faixa)
             vetor_tarifas = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table[2] / tbody / tr / td[4] / text()').extract()
             vetor_tarifas = gasbrasiliano.calcula_s_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
@@ -992,7 +1018,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
         elif segmento_ == "COMERCIAL":
             vetor_faixa = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table / tbody / tr / td[2] / text()').extract()
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 500,00', '500,00 a 999.999.999')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             vetor_faixa = organiza_faixa(vetor_faixa)
             vetor_tarifas = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table / tbody / tr / td[4] / text()').extract()
             vetor_tarifas = gasbrasiliano.calcula_s_imposto_tarifa(self.icms, self.pis, self.confins, vetor_tarifas)
@@ -1004,9 +1031,12 @@ class ConsultaTarifasSpider(scrapy.Spider):
         elif segmento_ == "INDUSTRIAL":
             #INDUSTRIAL PEQUENO PORTE
             vetor_faixa = response.xpath('/html/body/div[1]/section/div[3]/div/div[3] / div / table[1] / tbody / tr / td[2] / text()').extract()
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 3.000,00', '1 a 3.000,00')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a '+vetor_faixa[0]
+            vetor_faixa[0] = vetor_faixa[0] + ' a 999.999.999'
             tam = len(vetor_faixa)
-            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('> 40.000,00,00', '40.000,00,00 a 999.999.999')#VERIFICAR NÚMERO DE VÍRGULAS
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('>', '')
+            vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
             #INDUSTRIAL PEQUENO PORTE
             pass
 
@@ -1028,7 +1058,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             pis = 1.65
             confins = 7.60
             vetor_faixa = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/div[2] / table / tbody / tr / td[1] / text()').extract()
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 150', '1 a 150')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a '+vetor_faixa[0]
             vetor_tarifas = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/ div[2] / table / tbody / tr / td[2] / text()').extract()
             vetor_tarifas = scgas.calcula_s_imposto_tarifa(icms, pis, confins, vetor_tarifas)
             dados = scgas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -1049,7 +1080,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             pis = 1.65
             confins = 7.60
             vetor_faixa = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/table / tbody / tr / td[1] / text()').extract()
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 5', '1 a 5')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a ' + vetor_faixa[0]
             vetor_tarifas = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/ table / tbody / tr / td[2] / text()').extract()
             vetor_tarifas = scgas.calcula_s_imposto_tarifa(icms, pis, confins, vetor_tarifas)
             dados = scgas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -1060,7 +1092,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             pis = 1.65
             confins = 7.60
             vetor_faixa = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/table / tbody / tr / td[1] / text()').extract()
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 5', '1 a 5')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a ' + vetor_faixa[0]
             vetor_tarifas = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/ table / tbody / tr / td[2] / text()').extract()
             vetor_tarifas = scgas.calcula_s_imposto_tarifa(icms, pis, confins, vetor_tarifas)
             dados = scgas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -1071,7 +1104,8 @@ class ConsultaTarifasSpider(scrapy.Spider):
             pis = 1.65
             confins = 7.60
             vetor_faixa = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/table / tbody / tr[position() <= 12] / td[1] / text()').extract()
-            vetor_faixa[0] = vetor_faixa[0].replace('Até 5', '1 a 5')
+            vetor_faixa[0] = vetor_faixa[0].replace('Até ', '')
+            vetor_faixa[0] = '1 a ' + vetor_faixa[0]
             vetor_tarifas = response.xpath('//*[@id="content"]/div[3]/div[2]/div[3]/ table / tbody / tr[position() <= 12] / td[2] / text()').extract()
             vetor_tarifas = scgas.calcula_s_imposto_tarifa(icms, pis, confins, vetor_tarifas)
             dados = scgas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
@@ -1118,18 +1152,35 @@ class ConsultaTarifasSpider(scrapy.Spider):
                 else:
                     fxa_uni = "NAO"
 
-
-
-
                 valor[0] = int(valor[0])
                 valor[1] = int(valor[1])
+
+                ###VERIFICANDO SE O INICIO DA PRÓXIMA FAIXA É IGUAL AO FINAL DA FAIXA ANTERIOR
+                if(i != 0):
+                    fxa_anterior = dados[i - 1][1]  # dados na posicao anterior. Ex: '1 a 70'
+                    if ('a' in fxa_anterior):
+                        valor2 = int(fxa_anterior.replace(',01', '').replace(',00', '').replace('.', '').split('a')[1])
+                        if (valor[0] == valor2):
+                            fxa_igual = "VERDADEIRO"
+                        else:
+                            valor[0] = valor2
+                            if (valor[0] == valor2):
+                                fxa_igual = "VERDADEIRO"
+
+
+                    elif ('à' in fxa_anterior):
+                        valor2 = int(fxa_anterior.replace(',01', '').replace(',00', '').replace('.', '').split('à')[1])
+                        if (valor[0] == valor2):
+                            fxa_igual = "VERDADEIRO"
+                        else:
+                            valor[0] = valor2
+                            if (valor[0] == valor2):
+                                fxa_igual = "VERDADEIRO"
+                    ###VERFIM
+
                 volume = valor[1] - valor[0]
                 tarifa = float(dados[i][2].replace(',', '.'))
-                #print("Volume: {}".format(volume))
-                #print("TARIFA: {}".format(tarifa))
-                #print(tarifa)
                 fat_fxo = str(round(volume*tarifa, 2)).replace('.', ',')
-                #print("FATURA: {}".format(fat_fxo))
 
 
                 if(i == 0):
@@ -1144,25 +1195,7 @@ class ConsultaTarifasSpider(scrapy.Spider):
                     fat_acumulado = str(float(fat_acumulado.replace(',', '.'))+float(fat_fxo.replace(',', '.'))).replace('.', ',')
                     tarifa_media = str(round(float(fat_acumulado.replace(',', '.')) / volume_acumulado, 4)).replace('.', ',')
 
-                    ###VERIFICANDO SE O INICIO DA PRÓXIMA FAIXA É IGUAL AO FINAL DA FAIXA ANTERIOR
-                    fxa_anterior = dados[i-1][1]#dados na posicao anterior. Ex: '1 a 70'
-                    if('a' in fxa_anterior):
-                        valor2 = int(fxa_anterior.replace(',01', '').replace(',00', '').replace('.', '').split('a')[1])
-                        if(valor[0] == valor2):
-                            fxa_igual = "VERDADEIRO"
-                        else:
-                            valor[0] = valor2
-                            if(valor[0] == valor2):
-                                fxa_igual = "VERDADEIRO"
 
-
-                    elif('à' in fxa_anterior):
-                        valor2 = int(fxa_anterior.replace(',01', '').replace(',00', '').replace('.', '').split('à')[1])
-                        if (valor[0] == valor2):
-                            fxa_igual = "VERDADEIRO"
-                        else:
-                            fxa_igual = "FALSO"
-                    ###
 
                 yield{#Para cada valor envie as mesma informações.
                     "DTA_CST": data_atual,

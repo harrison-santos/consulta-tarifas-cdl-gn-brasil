@@ -48,31 +48,28 @@ class Empresa(object):
         return vetor_auxiliar
 
     def calcula_imposto_tarifa(self, icms, pis, confis, tarifas_s_impostos):
-        total_imposto = icms + pis+confis
+        total_impostos = icms + pis+confis
         vetor_tarifas = []
 
         for i in range(0, len(tarifas_s_impostos)):
-            tarifas_s_impostos[i] = float(tarifas_s_impostos[i].replace(',', '.'))
-            tarifa_c_imposto = round((tarifas_s_impostos[i] * 100) / (100 - total_imposto), 4)
-
-            vetor_tarifas.append(str(tarifas_s_impostos[i]).replace('.', ','))
+            tarifa = float(tarifas_s_impostos[i].replace(',', '.'))
+            #tarifa_c_imposto = round((tarifas_s_impostos* 100) / (100 - total_imposto), 4)
+            tarifa_c_imposto = round(tarifa / ((100 - total_impostos) / 100), 3)
+            vetor_tarifas.append(str(tarifa).replace('.', ','))
             vetor_tarifas.append(str(tarifa_c_imposto).replace('.', ','))
 
-        #print("SEM IMPOSTO")
-        #print(tarifas_s_impostos)
-        #print("COM IMPOSTO")
-        #print(vetor_tarifas )
         return vetor_tarifas
 
     def calcula_s_imposto_tarifa(self, icms, pis, confis, tarifas_c_impostos):
-        impostos = icms+pis+confis
+        total_impostos = icms+pis+confis
         vetor_tarifas = []
         for i in range(0, len(tarifas_c_impostos)):
-            valor_c_imposto = float(tarifas_c_impostos[i].replace(',', '.'))
-            valor_s_imposto = round(valor_c_imposto - (valor_c_imposto*(impostos/100)), 4)
+            valor_c_impostos = float(tarifas_c_impostos[i].replace(',', '.'))
+            #valor_s_imposto = round(valor_c_imposto - (valor_c_imposto*(total_impostos/100)), 4)
+            valor_s_impostos = round(valor_c_impostos * ((100 - total_impostos) / 100), 3)
 
-            vetor_tarifas.append(str(valor_s_imposto).replace('.', ','))
-            vetor_tarifas.append(str(valor_c_imposto).replace('.', ','))
+            vetor_tarifas.append(str(valor_s_impostos).replace('.', ','))
+            vetor_tarifas.append(str(valor_c_impostos).replace('.', ','))
 
         return vetor_tarifas
 
@@ -81,10 +78,11 @@ class Empresa(object):
         vetor_parcelas = []
 
         for i in range(0, len(parcelas_s_impostos)):
-            parcelas_s_impostos[i] = float(parcelas_s_impostos[i].replace(',', '.'))
-            parcelas_c_impostos = round((parcelas_s_impostos[i] *100)/(100-total_impostos), 3)
-            vetor_parcelas.append(str(parcelas_s_impostos[i]).replace('.', ','))
-            vetor_parcelas.append(str(parcelas_c_impostos).replace('.', ','))
+            valor_s_impostos = float(parcelas_s_impostos[i].replace(',', '.'))
+            #parcelas_c_impostos = round((parcelas_s_impostos[i] *100)/(100-total_impostos), 3)
+            valor_c_imposto = round(valor_s_impostos / ((100 - total_impostos) / 100), 3)
+            vetor_parcelas.append(str(valor_s_impostos).replace('.', ','))
+            vetor_parcelas.append(str(valor_c_imposto).replace('.', ','))
 
         return vetor_parcelas
 
@@ -94,7 +92,8 @@ class Empresa(object):
 
         for i in range(0, len(parcelas_c_impostos)):
             valor_c_impostos = float(parcelas_c_impostos[i].replace(',', '.'))
-            valor_s_impostos = round(valor_c_impostos - (valor_c_impostos*(total_impostos/100)), 3)
+            #valor_s_impostos = round(valor_c_impostos * (valor_c_impostos*(total_impostos/100)), 3)
+            valor_s_impostos = round(valor_c_impostos * ((100 - total_impostos) / 100), 3)
             vetor_parcelas.append(str(valor_s_impostos).replace('.', ','))
             vetor_parcelas.append(str(valor_c_impostos).replace('.', ','))
 

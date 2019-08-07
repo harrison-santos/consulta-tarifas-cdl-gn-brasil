@@ -23,7 +23,6 @@ def captura():
         S = lambda X: driver.execute_script('return document.body.parentNode.scroll' + X)
         driver.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
         driver.find_element_by_tag_name('body').screenshot(dir)
-
-        driver.implicitly_wait(90)
+        driver.implicitly_wait(300)
     driver.quit()
 

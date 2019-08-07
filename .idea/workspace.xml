@@ -2,38 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69a34e66-94ee-440b-ab85-b428d17c35b6" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/algas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/bahiagas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/cegas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/comgas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/compagas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/copergas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/gasbrasiliano_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/gasmig_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/pbgas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/potigas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/scgas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sergas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sulgas_spider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/modulos/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/modulos/consulta.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/modulos/envia.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdl_tarifas/modulos/icdl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/consulta_tarifas.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/empresa.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/modulos/empresa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/teste.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/img/bahiagas/0bahiagas6bahiagas-bahiagas0bahiagas8bahiagas-bahiagas2bahiagas0bahiagas1bahiagas9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/img/bahiagas/bahiagas.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/img/sergas/0sergas6sergas-sergas0sergas8sergas-sergas2sergas0sergas1sergas9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/img/sergas/sergas.png" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/cdl_screenshots/Main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/img/sergas/cogeracao/cogeracao_07-08-2019.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/img/sergas/comercial/comercial_07-08-2019.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/img/sergas/comprimido/comprimido_07-08-2019.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/img/sergas/industrial/industrial_07-08-2019.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/img/sergas/residencial/residencial_07-08-2019.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/img/sergas/veicular/veicular_07-08-2019.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,7 +23,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="589">
@@ -56,11 +35,44 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="algas_spider.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/algas_spider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="cdls_screenshots.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+            <state relative-caret-position="425">
+              <caret line="25" column="35" selection-start-line="22" selection-start-column="8" selection-end-line="25" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdl_screenshots/Main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sergas_screenshot.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="680">
+              <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -153,14 +165,16 @@
         <option value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/settings.py" />
         <option value="$PROJECT_DIR$/cdl_tarifas/cdls_screenshots.py" />
         <option value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/Main.py" />
-        <option value="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" />
         <option value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/bahiagas_spider.py" />
         <option value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/algas_spider.py" />
         <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" />
+        <option value="$PROJECT_DIR$/cdl_screenshots/Main.py" />
+        <option value="$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="779" />
     <option name="y" value="81" />
     <option name="width" value="718" />
@@ -181,6 +195,11 @@
             <path>
               <item name="consulta-tarifas-cdl-gn-brasil" type="b2602c69:ProjectViewProjectNode" />
               <item name="consulta-tarifas-cdl-gn-brasil" type="462c0819:PsiDirectoryNode" />
+              <item name="cdl_screenshots" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="consulta-tarifas-cdl-gn-brasil" type="b2602c69:ProjectViewProjectNode" />
+              <item name="consulta-tarifas-cdl-gn-brasil" type="462c0819:PsiDirectoryNode" />
               <item name="cdl_tarifas" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -195,12 +214,6 @@
               <item name="cdl_tarifas" type="462c0819:PsiDirectoryNode" />
               <item name="cdl_tarifas" type="462c0819:PsiDirectoryNode" />
               <item name="spiders" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="consulta-tarifas-cdl-gn-brasil" type="b2602c69:ProjectViewProjectNode" />
-              <item name="consulta-tarifas-cdl-gn-brasil" type="462c0819:PsiDirectoryNode" />
-              <item name="cdl_tarifas" type="462c0819:PsiDirectoryNode" />
-              <item name="modulos" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -238,7 +251,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Main (1)">
+  <component name="RunManager" selected="Python.Main (2)">
     <configuration name="Main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="consulta-tarifas-cdl-gn-brasil" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -252,6 +265,24 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="Main (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="consulta-tarifas-cdl-gn-brasil" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cdl_screenshots" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_screenshots/Main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -311,38 +342,20 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="selenium" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="consulta-tarifas-cdl-gn-brasil" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\consulta-tarifas-cdl-gn-brasil\modulo_screenshot\cdls_screenshots.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <list>
       <item itemvalue="Python.Main" />
-      <item itemvalue="Python.selenium" />
       <item itemvalue="Python.bahiagas_spider" />
       <item itemvalue="Python.algas_spider" />
       <item itemvalue="Python.Main (1)" />
+      <item itemvalue="Python.Main (2)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Main (2)" />
         <item itemvalue="Python.Main (1)" />
         <item itemvalue="Python.algas_spider" />
         <item itemvalue="Python.bahiagas_spider" />
         <item itemvalue="Python.Main" />
-        <item itemvalue="Python.selenium" />
       </list>
     </recent_temporary>
   </component>
@@ -360,16 +373,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15842839" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49814126" visible="true" weight="0.15842839" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32991013" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32882273" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27198917" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27198917" />
+      <window_info id="Structure" order="1" sideWeight="0.5018587" side_tool="true" weight="0.15842839" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.16302952" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -383,19 +396,19 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27198917" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15842839" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.34100136" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32882273" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.16302952" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32991013" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -410,14 +423,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/consulta_comprimido_veicular.py" />
-    <entry file="file://$PROJECT_DIR$/cdl_tarifas/modulos/empresa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/consulta_tarifas.py" />
     <entry file="file://$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/consulta_industrial_cogeracao.py" />
     <entry file="file://$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/consulta_residencial_comercial.py" />
@@ -602,6 +607,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/algas_spider.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -611,18 +626,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        <state relative-caret-position="425">
+          <caret line="25" column="35" selection-start-line="22" selection-start-column="8" selection-end-line="25" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
+    <entry file="file://$PROJECT_DIR$/cdl_screenshots/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+        <state relative-caret-position="136">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
         </state>
       </provider>
     </entry>

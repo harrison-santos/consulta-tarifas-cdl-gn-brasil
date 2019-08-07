@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/cdl_tarifas/modulos/interfaces" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cdl_tarifas" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cdl_tarifas/modulos" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cdl_screenshots" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -20,7 +20,7 @@ def captura(driver, data):
         print(option)
         if 'industrial' in str(segmento).lower():
             print('CAPTURA INDUSTRIAL')
-            body.screenshot(main_dir+'/industrial/industrial_{}.png'.format(data))
+            driver.find_element_by_tag_name('body').screenshot(main_dir+'/industrial/industrial_{}.png'.format(data))
 
         elif 'cogeração' in str(segmento).lower():
             driver.find_element_by_tag_name('body').screenshot(main_dir + '/cogeracao/cogeracao_{}.png'.format(data))
@@ -38,4 +38,4 @@ def captura(driver, data):
             driver.find_element_by_tag_name('body').screenshot(main_dir + '/comprimido/comprimido_{}.png'.format(data))
 
         time.sleep(5)
-    
+

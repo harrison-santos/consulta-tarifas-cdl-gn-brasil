@@ -2,6 +2,7 @@
 from modulos.envia import envia_dados
 import scrapy
 from scrapy.crawler import CrawlerProcess
+from modulos.empresa import Empresa
 
 class BahiagasSpiderSpider(scrapy.Spider):
     name = 'bahiagas_spider'

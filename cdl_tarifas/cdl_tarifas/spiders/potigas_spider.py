@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from modulos.empresa import Empresa
-from modulos.envia import envia_dados
+from empresa import Empresa
+from envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 
 class PotigasSpiderSpider(scrapy.Spider):
@@ -22,12 +22,12 @@ class PotigasSpiderSpider(scrapy.Spider):
         tam = len(vetor_faixa)
         vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('Acima de ', '')
         vetor_faixa[tam-1] = vetor_faixa[tam-1]+' a 999.999.999'
-        faixa_inicio = [1]
+        #faixa_inicio = [1]
 
-        for i in range(0, tam-1):
-            faixa_inicio.append(int(vetor_faixa[i].replace('.', ''))+1)
+        """for i in range(0, tam-1):
+            faixa_inicio.append(int(vetor_faixa[i].replace('.', ''))+1)"""
 
-        vetor_faixa = potigas.agrupa_duas_faixa(faixa_inicio, vetor_faixa)
+        #vetor_faixa = potigas.agrupa_duas_faixa(faixa_inicio, vetor_faixa)
         vetor_tarifas = response.xpath('//*[@id="internas"]/table[1]/tbody/tr[position() > 1] / td[position() = 2 or position() = 3] / text()').extract()
         dados = potigas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from envia_dados(dados, potigas.nome,"INDUSTRIAL","NAO POSSUI", "NAO POSSUI")

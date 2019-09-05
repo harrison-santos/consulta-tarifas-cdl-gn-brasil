@@ -1,5 +1,5 @@
 from datetime import date
-
+fields = ["DTA_CST", "COD_CDL", "NME_SEG", "NME_SBSEG", "FXA_INI", "FXA_FIM", "FXA_UNI", "FXA_IGUAL", "TAR_SIM", "VOL_FXA", "VOL_ACU", "FAT_FXA", "FAT_ACU", "TAR_MED"]
 
 def envia_dados(dados, nome_empresa, segmento, subsegmento, reducao):
     print('ENVIA DADOS FOI CHAMADO')
@@ -111,3 +111,5 @@ def envia_dados(dados, nome_empresa, segmento, subsegmento, reducao):
                 "TAR_MED": tarifa_media
             }
 
+            with open('dados', 'a+') as f:
+                f.write("{}\n".format('\t'.join(str(field) for field in fields)))

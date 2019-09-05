@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from modulos.empresa import Empresa
-from modulos.envia import envia_dados
+from empresa import Empresa
+from envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 
 class CopergasSpiderSpider(scrapy.Spider):
@@ -47,13 +47,11 @@ class CopergasSpiderSpider(scrapy.Spider):
         #INDUSTRIAL PEQUENO PORTE
 
         #RESIDENCIAL
-        vetor_faixa = response.xpath('//*[@id="content"]/article/table[7]/tbody / tr[position() >= 3] / td[1] / text()').extract()
-        tam = len(vetor_faixa)
-        #vetor_faixa[tam-1] = vetor_faixa[tam-1].replace('3.000', '3.001')
-        vetor_tarifas = response.xpath('//*[@id="content"]/article/table[7]/tbody / tr[position() >= 3] / td[position() = 2 or position() = 4] / text()').extract()
+        vetor_faixa = response.xpath('//*[@id="content"]/article/table[17]/tbody/tr[position()>= 3]/td[1]/text()').extract()
+        vetor_tarifas = response.xpath('//*[@id="content"]/article/table[17]/tbody / tr[position() >= 3] / td[position() = 2 or position() = 4] / text()').extract()
         for i in range(0, len(vetor_tarifas)):
             vetor_tarifas[i] = vetor_tarifas[i].replace('.', ',')
-        vetor_parcelas = response.xpath('//*[@id="content"]/article/table[7]/tbody / tr[position() >= 3] / td[position() = 3 or position() = 5] / text()').extract()
+        vetor_parcelas = response.xpath('//*[@id="content"]/article/table[17]/tbody / tr[position() >= 3] / td[position() = 3 or position() = 5] / text()').extract()
         dados = copergas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
         yield from envia_dados(dados, copergas.nome, "RESIDENCIAL", "NAO POSSUI", "POSSUI")
         #RESIDENCIAL

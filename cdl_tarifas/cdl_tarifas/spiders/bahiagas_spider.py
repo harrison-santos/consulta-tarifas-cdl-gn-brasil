@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from modulos.envia import envia_dados
+from envia import envia_dados
 import scrapy
 from scrapy.crawler import CrawlerProcess
-from modulos.empresa import Empresa
+from empresa import Empresa
 
 class BahiagasSpiderSpider(scrapy.Spider):
     name = 'bahiagas_spider'

@@ -20,7 +20,7 @@ FEED_EXPORT_ENCODING = 'utf-8'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'cdl_tarifas (+http://www.yourdomain.com)'
-#USER_AGENT = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
+USER_AGENT = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 

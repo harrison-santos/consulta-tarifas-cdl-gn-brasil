@@ -13,7 +13,7 @@ import sergas_spider
 import sulgas_spider
 
 from scrapy.crawler import CrawlerProcess
-from cdl_screenshots import cdls_screenshots
+#from cdl_screenshots import cdls_screenshots
 
 if __name__ == "__main__":
     process = CrawlerProcess(
@@ -21,7 +21,7 @@ if __name__ == "__main__":
             'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
         })
     process.crawl(algas_spider.AlgasSpiderSpider)
-    process.crawl(bahiagas_spider.BahiagasSpiderSpider)
+    #process.crawl(bahiagas_spider.BahiagasSpiderSpider)
     process.crawl(cegas_spider.CegasSpiderSpider)
     process.crawl(comgas_spider.ComgasSpiderSpider)
     process.crawl(compagas_spider.CompagasSpiderSpider)
@@ -34,4 +34,4 @@ if __name__ == "__main__":
     process.crawl(sergas_spider.SergasSpider)
     process.crawl(sulgas_spider.SulgasSpiderSpider)
     process.start()
-    cdls_screenshots.captura()
+    #cdls_screenshots.captura()

@@ -2,8 +2,8 @@
 import scrapy
 import bs4
 import urllib
-from modulos.empresa import Empresa
-from modulos.envia import envia_dados
+from empresa import Empresa
+from envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 
 class CompagasSpiderSpider(scrapy.Spider):

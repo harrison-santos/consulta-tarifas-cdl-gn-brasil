@@ -1,28 +1,37 @@
 from selenium import webdriver
 from datetime import date
+import sergas_screenshot
+import algas_screenshot
+import cegas_screenshot
+import comgas_screenshot
+import compagas_screenshot
+import copergas_screenshot
+import gasbrasiliano_screenshot
+import gasmig_screenshot
+import pbgas_screenshot
+import potigas_screenshot
+
+
 
 def captura():
     today = date.today().strftime("%d-%m-%Y")
-    cdls= [{'name': 'bahiagas', 'url': 'http://clienteonline.bahiagas.com.br/portal/tabela_tarifaria.jsp'},
-           {'name': 'sergas', 'url':'https://www.sergipegas.com.br/cms/tarifas'}]
-    #dir = r'C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\files\img\bahiagas_{}.png'.format(today)
-    main_dir = r'C:\consulta-tarifas-cdl-gn-brasil\files\img\{}\{}.png'
 
     #Instancia Driver
-    options = webdriver.ChromeOptions()
+    options = webdriver.FirefoxOptions()
+    options.add_argument("--proxy-server='direct://'")
+    options.add_argument("--proxy-bypass-list=*")
     options.headless = False
-    driver = webdriver.Chrome(options=options)
-    ##
+    driver = webdriver.Firefox(options=options)
 
-    #Requisicao
-
-    for cdl in cdls:
-        dir = main_dir.format(cdl['name'], cdl['name'])
-        driver.get(cdl['url'])
-        #driver.implicitly_wait(90)
-        S = lambda X: driver.execute_script('return document.body.parentNode.scroll' + X)
-        driver.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
-        driver.find_element_by_tag_name('body').screenshot(dir)
-        driver.implicitly_wait(300)
+    #REQUESTS FALTA: BAHIAGAS, GASMIG, SULGAS, scgas
+    algas_screenshot.captura(driver, today)
+    cegas_screenshot.captura(driver, today)
+    comgas_screenshot.captura(driver, today)
+    compagas_screenshot.captura(driver, today)
+    copergas_screenshot.captura(driver, today)
+    gasbrasiliano_screenshot.captura(driver, today)
+    gasmig_screenshot.captura(driver, today)
+    pbgas_screenshot.captura(driver, today)
+    potigas_screenshot.captura(driver, today)
+    sergas_screenshot.captura(driver, today)
     driver.quit()
-

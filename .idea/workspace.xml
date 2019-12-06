@@ -3,25 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="69a34e66-94ee-440b-ab85-b428d17c35b6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/geckodriver.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/algas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/algas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/bahiagas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/bahiagas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/cegas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/cegas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/comgas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/comgas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/compagas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/compagas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/copergas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/copergas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/gasbrasiliano_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/gasbrasiliano_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/gasmig_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/gasmig_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/pbgas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/pbgas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/potigas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/potigas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/scgas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/scgas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sergas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sergas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sulgas_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sulgas_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_tarifas/modulos/envia.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_tarifas/modulos/envia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/algas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/algas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/bahiagas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/bahiagas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/cegas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/cegas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/comgas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/comgas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/compagas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/compagas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/copergas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/copergas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/gasbrasiliano_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/gasbrasiliano_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/gasmig_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/gasmig_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/pbgas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/pbgas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/potigas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/potigas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/data/base_geral_2019-03-13.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/data/tarifas_sergas.csv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,19 +39,19 @@
   <component name="ProjectId" id="1QKyQw7sICt8Wy8RinKeWIv8HFf" />
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders\interfaces" />
-      <recent name="C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\consulta-tarifas-cdl-gn-brasil\files\data" />
       <recent name="C:\consulta-tarifas-cdl-gn-brasil" />
       <recent name="C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas" />
       <recent name="C:\consulta-tarifas-cdl-gn-brasil\modulo_screenshot" />
       <recent name="C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\modulos" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders\interfaces" />
+      <recent name="C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -112,7 +109,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="bahiagas_spider" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="cdls_screenshots" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="consulta-tarifas-cdl-gn-brasil" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -120,11 +117,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cdl_screenshots" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/bahiagas_spider.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -133,7 +130,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="copergas_spider" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="envia" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="consulta-tarifas-cdl-gn-brasil" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -141,11 +138,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cdl_tarifas/modulos" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/copergas_spider.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_tarifas/modulos/envia.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -154,7 +151,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="potigas_spider" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sergas_spider" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="consulta-tarifas-cdl-gn-brasil" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -166,7 +163,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/potigas_spider.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cdl_tarifas/cdl_tarifas/spiders/sergas_spider.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -176,19 +173,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.potigas_spider" />
-      <item itemvalue="Python.copergas_spider" />
-      <item itemvalue="Python.bahiagas_spider" />
       <item itemvalue="Python.algas_spider" />
       <item itemvalue="Python.Main" />
+      <item itemvalue="Python.sergas_spider" />
+      <item itemvalue="Python.envia" />
+      <item itemvalue="Python.cdls_screenshots" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Main" />
+        <item itemvalue="Python.cdls_screenshots" />
+        <item itemvalue="Python.sergas_spider" />
+        <item itemvalue="Python.envia" />
         <item itemvalue="Python.algas_spider" />
-        <item itemvalue="Python.bahiagas_spider" />
-        <item itemvalue="Python.copergas_spider" />
-        <item itemvalue="Python.potigas_spider" />
       </list>
     </recent_temporary>
   </component>

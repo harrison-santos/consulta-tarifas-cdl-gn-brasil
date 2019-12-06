@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69a34e66-94ee-440b-ab85-b428d17c35b6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/consulta-tarifas-cdl-gn-brasil.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/algas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/algas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/bahiagas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/bahiagas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/cdls_screenshots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/cegas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/cegas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/comgas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/comgas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/compagas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/compagas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/copergas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/copergas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/gasbrasiliano_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/gasbrasiliano_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/gasmig_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/gasmig_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/pbgas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/pbgas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/potigas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/potigas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py" beforeDir="false" afterPath="$PROJECT_DIR$/cdl_screenshots/sergas_screenshot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/data/base_geral_2019-03-13.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/data/tarifas_sergas.csv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

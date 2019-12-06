@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-
-import sys
-sys.path.insert(0, r'C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders\interfaces')
-from envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 import scrapy
+import sys
+from modulos.envia import envia_dados
+from modulos.empresa import Empresa
+sys.path.insert(0, r'C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders\interfaces')
 sys.path.insert(1, r'C:\consulta-tarifas-cdl-gn-brasil\cdl_tarifas\cdl_tarifas\spiders')
-from empresa import Empresa
+
 
 
 class SergasSpider(scrapy.Spider):
@@ -27,18 +27,37 @@ class SergasSpider(scrapy.Spider):
         # Existe um valor de tarifa que está dentro de um tag span, diferente de todos os outros que estão somente dentro de uma tag td,
         valor_span_cimp = response.xpath("//div[contains(@id, 'tab1')]/table/tbody/tr[8]/td[3]/span/text()").extract()[0]
         valor_span_simp = response.xpath("//div[contains(@id, 'tab1')]/table/tbody/tr[8]/td[2]/text()").extract()[0]
-        vetor_tarifas = response.xpath("//div[contains(@id, 'tab1')]/table/tbody/tr[position() <= 12]/td[position() >= 2]/text()").extract()
+        vetor_tarifas = response.xpath("//div[contains(@id, 'tab1')]/table/tbody/tr[position() <= 11]/td[position() >= 2]/text()").extract()
         vetor_tarifas.insert(vetor_tarifas.index(valor_span_simp) + 1, valor_span_cimp)  # Tarifa 'valor_span' não foi capturado no response acima mas agora foi adicionado com relacao ao seu anterior.
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from envia_dados(dados, sergas.nome, "INDUSTRIAL", "NAO POSSUI", "NAO POSSUI")
         # INDUSTRIAL
+
+        # INDUSTRIAL ISENÇÃO/DIFERIMENTO
+        vetor_faixa = response.xpath('//*[@id="tab1"]/table/tbody/tr[position() >= 14 and position() <= 24]/td[1]/text()').extract()
+        vetor_tarifas = response.xpath('//*[@id="tab1"]/table/tbody/tr[position() >= 14 and position() <= 24]/td[position() >= 2]/text()').extract()
+        dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
+        yield from envia_dados(dados, sergas.nome, "INDUSTRIAL", "INSEÇÃO/DIFERIMENTO", "POSSUI")
+        # INDUSTRIAL ISENÇÃO/DIFERIMENTO
+
 
         # COGERACAO
         vetor_faixa = response.xpath('//*[@id="tab2"]/table/tbody/tr[position() <= 14]/td[1]/text()').extract()
         vetor_tarifas = response.xpath('//*[@id="tab2"]/table/tbody/tr[position() <= 14]/td[position() > 1]/text()').extract()
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from envia_dados(dados, sergas.nome, "COGERACAO", "NAO POSSUI", "NAO POSSUI")
-        #COGERACAO
+        # COGERACAO
+
+        # COGERACAO ISENÇÃO/DIFERIMENTO
+        vetor_faixa = response.xpath('//*[@id="tab2"]/table/tbody/tr[15]/td/table/tbody/tr[position() >= 3]/td[1]/p/text()').extract()
+        vetor_faixa.extend(response.xpath('//*[@id="tab2"]/table/tbody/tr[15]/td/table/tbody/tr[position() >= 5]/td[1]/text()').extract())
+        vetor_tarifas = response.xpath('//*[@id="tab2"]/table/tbody/tr[15]/td/table/tbody/tr[position() >= 3]/td[position() >= 2]/text()').extract()
+        dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
+        yield from envia_dados(dados, sergas.nome, "COGERACAO", "INSEÇÃO/DIFERIMENTO", "POSSUI")
+        # COGERACAO ISENÇÃO/DIFERIMENTO
+
+
+
 
         # VEICULAR
         vetor_faixa = [faixa_auxiliar]
@@ -57,10 +76,20 @@ class SergasSpider(scrapy.Spider):
 
         # COMERCIAL
         vetor_faixa = response.xpath('//*[@id="tab5"]/table[1]/tbody/tr/td[1]/span/text()').extract()
-        vetor_tarifas = response.xpath('//*[@id="tab5"]/table[1]/tbody/tr/td[position() >= 2]/text()').extract()
+
+        vetor_tarifas = response.xpath('//*[@id="tab5"]/table[1]/tbody/tr[1]/td[position() >= 2]/text()').extract()
+        vetor_tarifas.extend(response.xpath('//*[@id="tab5"]/table[1]/tbody/tr[2]/td[2]/p/text()').extract())
+        vetor_tarifas.extend(response.xpath('//*[@id="tab5"]/table[1]/tbody/tr[2]/td[3]/text()').extract())
+        vetor_tarifas.extend(response.xpath('//*[@id="tab5"]/table[1]/tbody/tr[position() >= 3]/td[position() >= 2]/text()').extract())
         dados = sergas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from envia_dados(dados, sergas.nome, "COMERCIAL", "NAO POSSUI", "NAO POSSUI")
         # COMERCIAL
+
+        # COMERCIAL
+        vetor_faixa = response.xpath('//*[@id="tab5"]/table[2]/tbody/tr/td[1]/span/text()').extract()
+        vetor_tarifas = response.xpath('//*[@id="tab5"]/table[2]/tbody/tr/td[position() >= 2]/text()').extract()
+
+        # COMERCIAL DIFERIMENTO
 
         # COMPRIMIDO
         vetor_faixa = [faixa_auxiliar]

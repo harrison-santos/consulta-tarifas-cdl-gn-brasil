@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from lxml import html
 import scrapy
-from empresa import Empresa
-from envia import envia_dados
+import bs4
+from modulos.empresa import Empresa
+from modulos.envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 
 
@@ -52,29 +54,36 @@ class CegasSpiderSpider(scrapy.Spider):
 
 
         #COMERCIAL
-        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[1]/text()').extract()
+        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[2]/text()').extract()
         tam = len(vetor_faixa)
         vetor_faixa[tam - 1] = cegas.remove_string_acima(vetor_faixa[tam - 1])
 
-        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[position() = 3 or position() = 5]/text()').extract()
-        vetor_tarifas[0] = vetor_tarifas[0].replace('–', '0')
-        vetor_tarifas[1] = vetor_tarifas[1].replace('–', '0')
-        vetor_parcelas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[position() = 2 or position() = 4]/text()').extract()
-        dados = cegas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
+        vetor_tarifas = ['0', '0']
+        vetor_tarifas.extend(response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody/tr[position() >= 3]/td[position() = 3 or position() = 5]/text()').extract())
+        vetor_parcelas = response.xpath('//article[contains(@id, "post-327")]/div[2]/table[6]/tbody / tr[position() >= 4] / td[position() = 3 or position() = 5] / text()').extract()
+        dados = cegas.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
         yield from envia_dados(dados, cegas.nome, 'COMERCIAL', 'NAO POSSUI', 'NAO POSSUI')
         #COMERCIAL
 
         #RESIDENCIAL
-        vetor_faixa = response.xpath('//article[contains(@id, "post-327")]/div[2]/div/table/tbody/tr[position() >= 3]/td[1]/text()').extract()
+
+        soup = bs4.BeautifulSoup(response.text, "html.parser")  # raw text para html
+        soup = str(soup.findAll('table')[6])
+        tree = html.fromstring(soup)
+        vetor_faixa = tree.xpath('//tr[position() >= 3]/td[2]/text()')
         tam = len(vetor_faixa)
         vetor_faixa[tam - 1] = cegas.remove_string_acima(vetor_faixa[tam - 1])
+        qtd_tarifas = len(tree.xpath('//tr[position() >= 3]/td[position() = 3 or position() = 5]/text()'))
+        if(len(vetor_faixa)*2 == qtd_tarifas):
+            vetor_tarifas = tree.xpath('//tr[position() >= 3]/td[position() = 3 or position() = 5]/text()')
+        else:
+            vetor_tarifas = ['0', '0']
+            vetor_tarifas.extend(tree.xpath('//tr[position() >= 3]/td[position() = 3 or position() = 5]/text()'))
 
-        vetor_tarifas = response.xpath('//article[contains(@id, "post-327")]/div[2]/div/table/tbody/tr[position() >= 3]/td[position() = 3 or position() = 5]/text()').extract()
-        vetor_tarifas[0] = vetor_tarifas[0].replace('–', '0')
-        vetor_tarifas[1] = vetor_tarifas[1].replace('–', '0')
-        vetor_parcelas = response.xpath('//article[contains(@id, "post-327")]/div[2]/div/table/tbody/tr[position() >= 3]/td[position() = 2 or position() = 4]/text()').extract()
-        dados = cegas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
-        yield from envia_dados(dados, cegas.nome, 'RESIDENCIAL', 'NAO POSSUI', 'NAO POSSUI')
+        print(vetor_faixa)
+        print(vetor_tarifas)
+        #dados = cegas.organiza_faixa_tarifas_parcelas(vetor_faixa, vetor_tarifas, vetor_parcelas)
+        #yield from envia_dados(dados, cegas.nome, 'RESIDENCIAL', 'NAO POSSUI', 'NAO POSSUI')
         #RESIDENCIAL
 
 if __name__ == "__main__":

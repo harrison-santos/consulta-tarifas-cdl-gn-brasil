@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from empresa import Empresa
-from envia import envia_dados
+from modulos.empresa import Empresa
+from modulos.envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 
 class GasmigSpiderSpider(scrapy.Spider):
@@ -62,18 +62,13 @@ class GasmigSpiderSpider(scrapy.Spider):
             #PEQUENO CLIENTE NÃO RESIDENCIAL
 
             #NAO POSSUI
-            primeira_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_d2480188_710f_4ebe_b624_20664a29c517"]/div/table/tbody/tr[1]/td/text()').extract()
-            primeira_faixa[0] = primeira_faixa[0].replace('***', '')
-            vetor_faixa = [primeira_faixa[0]]
-            vetor_faixa.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_d2480188_710f_4ebe_b624_20664a29c517"]/div/table/tbody/tr[position() >= 2 and position() <= 7] / td[1] / text()').extract())
+            vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_ea4022ca_30af_4811_83f9_4b3aff99dff4"]/div/table/tbody/tr/td[1]/text()').extract()
             tam = len(vetor_faixa)
             vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
             vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
-            #vetor tarifas excluindo a primeira faixa com suas tarifas
-            vetor_tarifas = ['0', '0']
-            vetor_tarifas.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_d2480188_710f_4ebe_b624_20664a29c517"]/div/table/tbody/tr[position() >= 2 and position() <= 7] / td[position() >= 2] / text()').extract())
+
+            vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_ea4022ca_30af_4811_83f9_4b3aff99dff4"]/div/table/tbody/tr/td[position() = 3 or position() = 5] / text()').extract()
             dados = gasmig.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
-            dados[0] = (1, primeira_faixa[0], '0', '0', primeira_faixa[1], primeira_faixa[2])
             yield from envia_dados(dados, gasmig.nome, segmento_, "NAO POSSUI", "POSSUI")
             #NAO POSSUI
 
@@ -87,30 +82,23 @@ class GasmigSpiderSpider(scrapy.Spider):
 
         elif segmento_ == 'INDUSTRIAL':
             #INDUSTRIAL
-            vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_bc88c2cf_fffb_47bc_bd06_01685cb485de"]/div/table/tbody/tr[position() >= 1 and position() <= 13]/td[1]/text()').extract()
+            vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_bc88c2cf_fffb_47bc_bd06_01685cb485de"]/div/table/tbody/tr[position() >= 1 and position() <= 9]/td[1]/text()').extract()
             tam = len(vetor_faixa)
             vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
             vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
-            vetor_faixa[tam - 2] = vetor_faixa[tam - 2].replace('\t', '')
-            vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_bc88c2cf_fffb_47bc_bd06_01685cb485de"]/div/table/tbody/tr[position() >= 1 and position() <= 13] / td[position() >= 2] / text()').extract()
+            vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_bc88c2cf_fffb_47bc_bd06_01685cb485de"]/div/table/tbody/tr[position() >= 1 and position() <= 9] / td[position() >= 2] / text()').extract()
             dados = gasmig.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
             yield from envia_dados(dados, gasmig.nome, segmento_, "NAO POSSUI", "POSSUI")
             #INDUSTRIAL
 
             #NAO POSSUI
-            primeira_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_3841b951_522d_4f47_b5cb_f98857249109"]/div/table/tbody/tr[1]/td/text()').extract()
-            primeira_faixa[0] = primeira_faixa[0].replace('***', '')
-            vetor_tarifas = ['0', '0']
-            vetor_faixa = [primeira_faixa[0]]
-            vetor_faixa.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_3841b951_522d_4f47_b5cb_f98857249109"]/div/table/tbody/tr[position() >= 2 and position() <= 7]/td[1]/text()').extract())
+            vetor_faixa = response.xpath('//*[@id="cbqwpctl00_ctl58_g_c02bb240_fa4c_4d34_a9ef_71d285ef2f11"]/div/table/tbody/tr/td[1]/text()').extract()
             tam = len(vetor_faixa)
             vetor_faixa[tam - 1] = vetor_faixa[tam - 1].replace('Acima de ', '').replace('acima de ', '')
             vetor_faixa[tam - 1] = vetor_faixa[tam - 1] + ' a 999.999.999'
-            vetor_tarifas.extend(response.xpath('//*[@id="cbqwpctl00_ctl58_g_3841b951_522d_4f47_b5cb_f98857249109"]/div/table/tbody/tr[position() >= 2 and position() < 8]/td[position() >= 2] / text()').extract())
+            vetor_tarifas = response.xpath('//*[@id="cbqwpctl00_ctl58_g_c02bb240_fa4c_4d34_a9ef_71d285ef2f11"]/div/table/tbody/tr/td[position() = 3 or position() = 5]/text()').extract()
             dados = gasmig.organiza_faixa_tarifas(vetor_faixa, vetor_tarifas)
-            #primeira faixa
-            dados[0] = (1, primeira_faixa[0], '0', '0', primeira_faixa[1], primeira_faixa[2])
-            yield from envia_dados(dados, gasmig.nome, segmento_, "USO GERAL", "POSSUI")
+            yield from envia_dados(dados, gasmig.nome, segmento_, "CI - 01", "POSSUI")
             #NAO POSSUI
 
         elif segmento_ == 'COGERACAO':

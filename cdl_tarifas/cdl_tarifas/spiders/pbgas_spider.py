@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from empresa import Empresa
-from envia import envia_dados
+from modulos.empresa import Empresa
+from modulos.envia import envia_dados
 from scrapy.crawler import CrawlerProcess
 
 class PbgasSpiderSpider(scrapy.Spider):

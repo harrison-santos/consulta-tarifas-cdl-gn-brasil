@@ -1,5 +1,6 @@
 from datetime import date
-fields = ["DTA_CST", "COD_CDL", "NME_SEG", "NME_SBSEG", "FXA_INI", "FXA_FIM", "FXA_UNI", "FXA_IGUAL", "TAR_SIM", "VOL_FXA", "VOL_ACU", "FAT_FXA", "FAT_ACU", "TAR_MED"]
+import csv
+
 
 def envia_dados(dados, nome_empresa, segmento, subsegmento, reducao):
     print('ENVIA DADOS FOI CHAMADO')
@@ -10,8 +11,9 @@ def envia_dados(dados, nome_empresa, segmento, subsegmento, reducao):
     fat_acumulado = 0
     fxa_igual = "VERDADEIRO"
     fxa_uni = "NAO"
-
     #parcela_fxa = "NAO"
+
+
 
     for i in range(0, len(dados), 1):  # percorrer dados pegando sempre o valor de faixa
         if str(dados[i][4]) != '0' or str(dados[i][5]) != '0':
@@ -111,5 +113,8 @@ def envia_dados(dados, nome_empresa, segmento, subsegmento, reducao):
                 "TAR_MED": tarifa_media
             }
 
-            with open('dados', 'a+') as f:
-                f.write("{}\n".format('\t'.join(str(field) for field in fields)))
+            #Escrevendo no CSV
+            with open('C:\consulta-tarifas-cdl-gn-brasil\dados_teste.csv', mode='a') as csv_file:
+                writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                writer.writerow([data_atual, nome_empresa, segmento, subsegmento, valor[0], valor[1], fxa_uni, fxa_igual, dados[i][2],
+                                 volume, volume_acumulado, fat_fxo, fat_acumulado, tarifa_media])
